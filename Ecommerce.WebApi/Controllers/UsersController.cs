@@ -61,5 +61,40 @@ namespace Ecommerce.WebApi.Controllers
 
             return Ok(userColumns);
         }
+
+        [HttpPut("{userId:int}")]
+        public async Task<IActionResult> UpdateUser(int userId, [FromBody] UpdateUserDto dto)
+        {
+            var user = await _db.Users.FindAsync(userId);
+
+            if (user == null)
+            {
+                return NotFound($"User with Id {userId} not found");
+            }
+
+            user.FirstName = dto.FirstName;
+            user.LastName = dto.LastName;
+
+            await _db.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpDelete("{userId:int}")]
+        public async Task<IActionResult> DeleteUser(int userId)
+        {
+            var user = await _db.Users.FindAsync(userId);
+
+            if (user == null)
+            {
+                return NotFound($"User with Id {userId} not found");
+            }
+
+            _db.Users.Remove(user);
+
+            await _db.SaveChangesAsync();
+
+            return Ok();
+        }
     }
 }
