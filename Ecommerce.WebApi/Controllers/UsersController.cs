@@ -44,7 +44,7 @@ namespace Ecommerce.WebApi.Controllers
         [HttpGet("{userId:int}")]
         public async Task<IActionResult> GetUserById(int userId)
         {
-            //// SELECT TOP 1 * FROM Users Where Id = 1999
+            //// SELECT TOP 1 * FROM Users Where Id = userId
             //var user = await _db.Users.Where(x => x.Id == userId).FirstOrDefaultAsync();
             //var user2 = await _db.Users.FirstOrDefaultAsync(x => x.Id == userId);
 
@@ -74,6 +74,7 @@ namespace Ecommerce.WebApi.Controllers
 
             user.FirstName = dto.FirstName;
             user.LastName = dto.LastName;
+            user.Password = dto.Password;
 
             await _db.SaveChangesAsync();
 
